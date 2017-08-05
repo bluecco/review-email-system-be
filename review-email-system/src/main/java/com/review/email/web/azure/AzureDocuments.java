@@ -4,6 +4,8 @@ import java.util.List;
 
 public class AzureDocuments {
 	private List<AzureDocument> documents;
+	
+	public AzureDocuments() {}
 
 	public AzureDocuments(List<AzureDocument> documents) {
 		super();

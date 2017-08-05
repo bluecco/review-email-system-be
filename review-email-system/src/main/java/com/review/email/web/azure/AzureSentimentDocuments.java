@@ -1,20 +1,23 @@
 package com.review.email.web.azure;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class AzureSentimentDocuments {
-	private List<AzureSentimentDocument> documents;
-
-	public AzureSentimentDocuments(List<AzureSentimentDocument> documents) {
+	
+	private ArrayList<AzureSentimentDocument> documents;
+	
+	public AzureSentimentDocuments() {}
+	
+	public AzureSentimentDocuments(ArrayList<AzureSentimentDocument> documents) {
 		super();
 		this.documents = documents;
 	}
 
-	public List<AzureSentimentDocument> getDocuments() {
+	public ArrayList<AzureSentimentDocument> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(List<AzureSentimentDocument> documents) {
+	public void setDocuments(ArrayList<AzureSentimentDocument> documents) {
 		this.documents = documents;
 	}
 	

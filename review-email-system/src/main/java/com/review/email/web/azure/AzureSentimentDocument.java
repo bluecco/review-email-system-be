@@ -5,6 +5,8 @@ public class AzureSentimentDocument {
 	private double score;
 	private String id;
 	
+	public AzureSentimentDocument() {}
+	
 	public AzureSentimentDocument(double score, String id) {
 		super();
 		this.score = score;

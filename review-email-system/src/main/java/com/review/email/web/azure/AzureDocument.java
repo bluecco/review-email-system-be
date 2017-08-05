@@ -6,6 +6,8 @@ public class AzureDocument {
 	private String id;
 	private String text;
 	
+	public AzureDocument() {}
+	
 	public AzureDocument(String language, String id, String text) {
 		super();
 		this.language = language;
