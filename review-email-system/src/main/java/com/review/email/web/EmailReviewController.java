@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -63,7 +63,8 @@ public class EmailReviewController {
 	        @RequestParam(value="sort", required = false, defaultValue = "arrivalDate") String sort,
 	        @RequestParam(value="direction", required = false, defaultValue = "asc") String sortDirection) {
 		
-		Sort sorting = new Sort(sortDirection, sort);
+		
+		Sort sorting = new Sort(Direction.fromString(sortDirection), sort);
 		PageRequest pg = new PageRequest(page, size, sorting);
 		Page<EmailReview> emails = emailReviewService.findAllByPageOrderByDate(pg);
 		return emails;
@@ -121,7 +122,7 @@ public class EmailReviewController {
 	        @RequestParam(value="sort", required = false, defaultValue = "arrivalDate") String sort,
 	        @RequestParam(value="direction", required = false, defaultValue = "desc") String sortDirection) {
 		
-		Sort sorting = new Sort(sortDirection, sort);
+		Sort sorting = new Sort(Direction.fromString(sortDirection), sort);
 		PageRequest pg = new PageRequest(page, size, sorting);
 		return emailReviewService.findByPublished(pg, true);
 	}
