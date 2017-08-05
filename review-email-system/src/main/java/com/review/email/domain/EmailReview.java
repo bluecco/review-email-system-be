@@ -5,7 +5,6 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Null;
 
 import org.springframework.util.Assert;
 
@@ -21,6 +20,8 @@ public class EmailReview {
 	private String body;	
 	private Double score;
 	private boolean published;
+	
+	public EmailReview() {}
 	
 	public EmailReview(String messageId, Date arrivalDate, String fromEmail, String fromDisplayName, String subject,
 			String body, Double score, boolean published) {
