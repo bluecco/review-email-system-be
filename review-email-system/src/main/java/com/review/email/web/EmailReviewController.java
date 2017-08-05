@@ -39,14 +39,12 @@ public class EmailReviewController {
 	@Autowired
 	final EmailReviewService emailReviewService;
 	
-	@Value("${az.api.key}")
-    private String apiKey;
+	@Autowired
+	final RestTemplate restTemplate;
 	
-	@Value("${az.sentiment.endpoint}")
-	private String sentimentEndpoint;
-	
-	public EmailReviewController(EmailReviewService emailReviewService) {
+	public EmailReviewController(EmailReviewService emailReviewService, RestTemplate restTemplate) {
 		this.emailReviewService = emailReviewService;
+		this.restTemplate = restTemplate;
 	}
 	
 	@RequestMapping(value = "/reviews", method=RequestMethod.POST)
@@ -94,10 +92,9 @@ public class EmailReviewController {
 			throw new ResourceNotFoundException("Email not found");
 		}
 		
-		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.set("Ocp-Apim-Subscription-Key", apiKey);
+		headers.set("Ocp-Apim-Subscription-Key", emailReviewService.getApiKey());
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		AzureDocument ad = new AzureDocument("en", emailReview.getMessageId(), emailReview.getBody());
@@ -106,7 +103,7 @@ public class EmailReviewController {
 		AzureDocuments ads = new AzureDocuments(adList);
 		
 		HttpEntity entity = new HttpEntity(ads, headers);
-		ResponseEntity<AzureSentimentDocuments> respEntity = restTemplate.exchange(sentimentEndpoint, HttpMethod.POST, entity, AzureSentimentDocuments.class);
+		ResponseEntity<AzureSentimentDocuments> respEntity = restTemplate.exchange(emailReviewService.getSentimentEndpoint(), HttpMethod.POST, entity, AzureSentimentDocuments.class);
 		
 		AzureSentimentDocuments asd = respEntity.getBody(); 
 		double score = Math.round(asd.getDocuments().get(0).getScore() * 100);
