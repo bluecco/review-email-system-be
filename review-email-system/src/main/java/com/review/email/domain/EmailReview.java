@@ -15,7 +15,7 @@ public class EmailReview {
 	@Id
 	private String messageId;
 	private Timestamp arrivalDate;
-	private String from;
+	private String fromEmail;
 	private String fromDisplayName;
 	private String subject;
 	private String body;	
@@ -23,16 +23,16 @@ public class EmailReview {
 	private Double score;
 	private boolean published;
 	
-	public EmailReview(String messageId, Timestamp arrivalDate, String from, String fromDisplayName, String subject,
+	public EmailReview(String messageId, Timestamp arrivalDate, String fromEmail, String fromDisplayName, String subject,
 			String body, Double score, boolean published) {
 		super();
 		
 		Assert.hasLength(messageId, "messageId must not be empty");
-		Assert.hasLength(from, "from must not be empty");
+		Assert.hasLength(fromEmail, "from must not be empty");
 		
 		this.messageId = messageId;
 		this.arrivalDate = arrivalDate;
-		this.from = from;
+		this.fromEmail = fromEmail;
 		this.fromDisplayName = fromDisplayName;
 		this.subject = subject;
 		this.body = body;
@@ -56,12 +56,12 @@ public class EmailReview {
 		this.arrivalDate = arrivalDate;
 	}
 
-	public String getFrom() {
-		return from;
+	public String getFromEmail() {
+		return fromEmail;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setFromEmail(String from) {
+		this.fromEmail = from;
 	}
 
 	public String getFromDisplayName() {
@@ -106,7 +106,7 @@ public class EmailReview {
 
 	@Override
 	public String toString() {
-		return "EmailReview [messageId=" + messageId + ", arrivalDate=" + arrivalDate + ", from=" + from
+		return "EmailReview [messageId=" + messageId + ", arrivalDate=" + arrivalDate + ", fromEmail=" + fromEmail
 				+ ", fromDisplayName=" + fromDisplayName + ", subject=" + subject + ", body=" + body + ", score="
 				+ score + ", published=" + published + "]";
 	}
