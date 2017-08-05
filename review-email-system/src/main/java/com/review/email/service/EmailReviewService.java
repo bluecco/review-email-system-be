@@ -17,4 +17,7 @@ public interface EmailReviewService {
 
 	EmailReview findByMessageId(String messageId);
 	
+	public String getApiKey();
+
+	public String getSentimentEndpoint();
 }
