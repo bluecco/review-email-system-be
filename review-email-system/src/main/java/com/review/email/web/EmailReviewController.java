@@ -88,7 +88,32 @@ public class EmailReviewController {
 	@RequestMapping(value = "/reviews/{messageId}/analyze", method=RequestMethod.PUT)
 	@ResponseBody
 	public EmailReview analyzeReview(@PathVariable("messageId") String messageId) {
-		return null;
+		EmailReview emailReview = emailReviewService.findByMessageId(messageId);
+		
+		if (emailReview == null) {
+			throw new ResourceNotFoundException("Email not found");
+		}
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.set("Ocp-Apim-Subscription-Key", apiKey);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		AzureDocument ad = new AzureDocument("en", emailReview.getMessageId(), emailReview.getBody());
+		List<AzureDocument> adList = new ArrayList<AzureDocument>();
+		adList.add(ad);
+		AzureDocuments ads = new AzureDocuments(adList);
+		
+		HttpEntity entity = new HttpEntity(ads, headers);
+		ResponseEntity<AzureSentimentDocuments> respEntity = restTemplate.exchange(sentimentEndpoint, HttpMethod.POST, entity, AzureSentimentDocuments.class);
+		
+		AzureSentimentDocuments asd = respEntity.getBody(); 
+		double score = Math.round(asd.getDocuments().get(0).getScore() * 100);
+		emailReview.setScore(score);
+		emailReviewService.save(emailReview);
+		
+		return emailReview;
 	}
 	
 	@RequestMapping(value = "/reviews/published", method=RequestMethod.GET)
