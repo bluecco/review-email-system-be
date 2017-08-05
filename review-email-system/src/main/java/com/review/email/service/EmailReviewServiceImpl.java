@@ -27,17 +27,17 @@ public class EmailReviewServiceImpl implements EmailReviewService {
 		emailReviewRepository.save(entity);
 		return entity;
 	}
-
-	@Override
-	public EmailReview findByMessageId(String messageId) {
-		return emailReviewRepository.findByMessageId(messageId);
-	}
 	
 	@Override
 	public List<EmailReview> findAll() {
 		return (List<EmailReview>) emailReviewRepository.findAll();
 	}
 
+	@Override
+	public EmailReview findByMessageId(String messageId) {
+		return emailReviewRepository.findByMessageId(messageId);
+	}
+	
 	@Override
 	public Page<EmailReview> findAllByPageOrderByDate(Pageable pageable) {
 		return emailReviewRepository.findAll(pageable);
