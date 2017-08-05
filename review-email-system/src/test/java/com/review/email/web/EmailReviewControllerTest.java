@@ -45,6 +45,18 @@ public class EmailReviewControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(new EmailReviewController(emailReviewService)).build();
     }
 
+	@Test
+	public void shouldSaveEmailReview() throws Exception {
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String json = ow.writeValueAsString(this.er);
+		
+		when(emailReviewService.save(any(EmailReview.class))).thenReturn(er);
+
+		mockMvc.perform(post("/reviews").contentType(MediaType.APPLICATION_JSON).content(json))
+				.andExpect(status().isCreated()).andExpect(jsonPath("$.messageId", is("123")));
+	}
+	
 	
 
 }
