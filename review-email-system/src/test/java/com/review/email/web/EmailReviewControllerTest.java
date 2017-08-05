@@ -85,6 +85,18 @@ public class EmailReviewControllerTest {
 				.andExpect(status().isOk()).andExpect(jsonPath("$.totalElements", is(1)));
 	}
 	
-	
+	@Test
+	public void shouldPublishEmailReview() throws Exception {
+		EmailReview toUpdate = new EmailReview("123", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, false);
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String json = ow.writeValueAsString(toUpdate);
+		
+		when(emailReviewService.findByMessageId(any(String.class))).thenReturn(toUpdate);
+		
+		mockMvc.perform(put("/reviews/123/publish").contentType(MediaType.APPLICATION_JSON).content(json))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.messageId", is("123")))
+			.andExpect(jsonPath("$.published", is(true)));
+	}
 
 }
