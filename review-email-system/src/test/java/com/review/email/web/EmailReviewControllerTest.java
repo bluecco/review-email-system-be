@@ -57,6 +57,34 @@ public class EmailReviewControllerTest {
 				.andExpect(status().isCreated()).andExpect(jsonPath("$.messageId", is("123")));
 	}
 	
+	@Test
+	public void shouldRetrieveEmailReviewPage() throws Exception {
+		
+		ArrayList<EmailReview> emailReviews = new ArrayList<EmailReview>();
+		emailReviews.add(new EmailReview("123", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, true));
+		emailReviews.add(new EmailReview("456", new Date(1234), "email2@email.com", "email2", "subject", "body", 0.0, false));
+		emailReviews.add(new EmailReview("789", new Date(1234), "email3@email.com", "email3", "subject", "body", 0.0, false));
+		
+		Page<EmailReview> page = new PageImpl<>(emailReviews);
+		when(emailReviewService.findAllByPageOrderByDate(any(Pageable.class))).thenReturn(page);
+
+		mockMvc.perform(get("/reviews")).andDo(print())
+				.andExpect(status().isOk()).andExpect(jsonPath("$.totalElements", is(3)));
+	}
+	
+	@Test
+	public void shouldRetrievePublishedEmailReviewPage() throws Exception {
+		
+		ArrayList<EmailReview> emailReviews = new ArrayList<EmailReview>();
+		emailReviews.add(new EmailReview("123", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, true));
+		
+		Page<EmailReview> page = new PageImpl<>(emailReviews);
+		when(emailReviewService.findByPublished(any(Pageable.class), any(boolean.class))).thenReturn(page);
+
+		mockMvc.perform(get("/reviews/published")).andDo(print())
+				.andExpect(status().isOk()).andExpect(jsonPath("$.totalElements", is(1)));
+	}
+	
 	
 
 }
