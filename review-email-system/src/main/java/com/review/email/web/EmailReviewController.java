@@ -33,7 +33,6 @@ import com.review.email.web.azure.AzureDocuments;
 import com.review.email.web.azure.AzureSentimentDocuments;
 
 @RestController
-@EnableSpringDataWebSupport
 public class EmailReviewController {
 	
 	@Autowired
@@ -45,6 +44,12 @@ public class EmailReviewController {
 	public EmailReviewController(EmailReviewService emailReviewService, RestTemplate restTemplate) {
 		this.emailReviewService = emailReviewService;
 		this.restTemplate = restTemplate;
+	}
+	
+	@RequestMapping(value = "/", method=RequestMethod.GET)
+	@ResponseBody
+	public String apiInfo() {
+		return "review email system api";
 	}
 	
 	@RequestMapping(value = "/reviews", method=RequestMethod.POST)
