@@ -16,7 +16,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        .allowedMethods("POST", "PUT", "DELETE");
+        .allowedMethods("POST", "PUT", "DELETE", "GET");
     }
 	
 	@Bean
