@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -54,7 +55,7 @@ public class EmailReviewControllerTest {
 
 	@Before
 	public void setUp() {
-		er = new EmailReview("123", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, true);
+		er = new EmailReview("123", new Timestamp(1234), "email@email.com", "email", "subject", "body", 0.0, true);
 		emailReviewService = mock(EmailReviewServiceImpl.class);
 		restTemplate = mock(RestTemplate.class);
 		mockMvc = MockMvcBuilders.standaloneSetup(new EmailReviewController(emailReviewService, restTemplate)).build();
@@ -77,11 +78,11 @@ public class EmailReviewControllerTest {
 
 		ArrayList<EmailReview> emailReviews = new ArrayList<EmailReview>();
 		emailReviews
-				.add(new EmailReview("123", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, true));
+				.add(new EmailReview("123", new Timestamp(1234), "email@email.com", "email", "subject", "body", 0.0, true));
 		emailReviews.add(
-				new EmailReview("456", new Date(1234), "email2@email.com", "email2", "subject", "body", 0.0, false));
+				new EmailReview("456", new Timestamp(1234), "email2@email.com", "email2", "subject", "body", 0.0, false));
 		emailReviews.add(
-				new EmailReview("789", new Date(1234), "email3@email.com", "email3", "subject", "body", 0.0, false));
+				new EmailReview("789", new Timestamp(1234), "email3@email.com", "email3", "subject", "body", 0.0, false));
 
 		Page<EmailReview> page = new PageImpl<>(emailReviews);
 		when(emailReviewService.findAllByPageOrderByDate(any(Pageable.class))).thenReturn(page);
@@ -95,7 +96,7 @@ public class EmailReviewControllerTest {
 
 		ArrayList<EmailReview> emailReviews = new ArrayList<EmailReview>();
 		emailReviews
-				.add(new EmailReview("123", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, true));
+				.add(new EmailReview("123", new Timestamp(1234), "email@email.com", "email", "subject", "body", 0.0, true));
 
 		Page<EmailReview> page = new PageImpl<>(emailReviews);
 		when(emailReviewService.findByPublished(any(Pageable.class), any(boolean.class))).thenReturn(page);
@@ -106,7 +107,7 @@ public class EmailReviewControllerTest {
 
 	@Test
 	public void shouldPublishEmailReview() throws Exception {
-		EmailReview toUpdate = new EmailReview("123", new Date(1234), "email@email.com", "email", "subject", "body",
+		EmailReview toUpdate = new EmailReview("123", new Timestamp(1234), "email@email.com", "email", "subject", "body",
 				0.0, false);
 		when(emailReviewService.findByMessageId(any(String.class))).thenReturn(toUpdate);
 

@@ -1,6 +1,7 @@
 package com.review.email.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +14,7 @@ import org.springframework.util.Assert;
 public class EmailReview {
 	@Id
 	private String messageId;
-	private Date arrivalDate;
+	private Timestamp arrivalDate;
 	private String fromEmail;
 	private String fromDisplayName;
 	private String subject;
@@ -23,7 +24,7 @@ public class EmailReview {
 	
 	public EmailReview() {}
 	
-	public EmailReview(String messageId, Date arrivalDate, String fromEmail, String fromDisplayName, String subject,
+	public EmailReview(String messageId, Timestamp arrivalDate, String fromEmail, String fromDisplayName, String subject,
 			String body, Double score, boolean published) {
 		super();
 		
@@ -48,11 +49,11 @@ public class EmailReview {
 		this.messageId = messageId;
 	}
 
-	public Date getArrivalDate() {
+	public Timestamp getArrivalDate() {
 		return arrivalDate;
 	}
 
-	public void setArrivalDate(Date arrivalDate) {
+	public void setArrivalDate(Timestamp arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 

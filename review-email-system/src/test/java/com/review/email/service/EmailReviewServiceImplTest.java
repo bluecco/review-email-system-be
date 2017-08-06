@@ -1,25 +1,20 @@
 package com.review.email.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -75,9 +70,9 @@ public class EmailReviewServiceImplTest {
 	
 	@Test
 	public void findAllByPageOrderByDateShouldReturnPage() throws Exception {
-		this.emailReviewService.save(new EmailReview("123", new Date(0), "email@email.com", "email", "subject", "body", 0.0, false));
-		this.emailReviewService.save(new EmailReview("456", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, false));
-		this.emailReviewService.save(new EmailReview("789", new Date(5678), "email@email.com", "email", "subject", "body", 0.0, false));
+		this.emailReviewService.save(new EmailReview("123", new Timestamp(0), "email@email.com", "email", "subject", "body", 0.0, false));
+		this.emailReviewService.save(new EmailReview("456", new Timestamp(1234), "email@email.com", "email", "subject", "body", 0.0, false));
+		this.emailReviewService.save(new EmailReview("789", new Timestamp(5678), "email@email.com", "email", "subject", "body", 0.0, false));
 		
 		Page<EmailReview> emailReviewsDb = this.emailReviewService.findAllByPageOrderByDate(new Pageable() {
 
@@ -134,9 +129,9 @@ public class EmailReviewServiceImplTest {
 	
 	@Test
 	public void findByPublished() throws Exception {
-		this.emailReviewService.save(new EmailReview("123", new Date(0), "email@email.com", "email", "subject", "body", 0.0, false));
-		this.emailReviewService.save(new EmailReview("456", new Date(1234), "email@email.com", "email", "subject", "body", 0.0, true));
-		this.emailReviewService.save(new EmailReview("789", new Date(5678), "email@email.com", "email", "subject", "body", 0.0, false));
+		this.emailReviewService.save(new EmailReview("123", new Timestamp(0), "email@email.com", "email", "subject", "body", 0.0, false));
+		this.emailReviewService.save(new EmailReview("456", new Timestamp(1234), "email@email.com", "email", "subject", "body", 0.0, true));
+		this.emailReviewService.save(new EmailReview("789", new Timestamp(5678), "email@email.com", "email", "subject", "body", 0.0, false));
 		
 		Page<EmailReview> emailReviews = this.emailReviewService.findByPublished(new Pageable() {
 
